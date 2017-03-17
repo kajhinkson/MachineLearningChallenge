@@ -64,6 +64,18 @@ One thing you will notice in the datasets is category fields T1, T2, T4. All the
 
 
 
+##Solution
+1. List of merchant id with scores has been created for all merchants that had at least one transaction created between Jul 1 and Dec 27 2015. The scores range between 500 and 1000, with a higher score representing a better merchant. Factors considered for the score are below:
+
+ - Late Rate: Where an order (or part thereof) was fulfilled after the ship by date, then the merchant should be penalized
+ - Cancel and Return Rate: This data did not appear to be mutually exclusive, so a combination of the two was used to compare against the Late Rate to determine if some merchants are even more prone to Cancels and Returns given that they are late to fulfill orders 
+ - Discount Rate: Not many merchants in the data afford discounts, but if a merchant was a discounter, a further penalty was applied for late fulfillment
+ - Dollars at Risk: For merchants good operational metrics (Cancel and Return Rates), a further measure was applied to account for sales that were generally at risk due to late fulfillment
+ 
+ The listed factors were used in a heuristic algorithm to assign scores to each merchant. Scores were further normalized to fit a range (500 - 1000). Generally, customers with order volume less than 10 in the period (~40%) should be refrained from scoring.
+
+2. A combination of MySQL and Tableau were actually used to complete the exercise. R & Python were considered, but within the time period I felt most comfortable to do initial exploration of the data through a traditional database.
+
 
 
 
